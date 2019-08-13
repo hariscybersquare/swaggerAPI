@@ -6,23 +6,51 @@ user = "admin"
 password = "password"
 couchserver = couchdb.Server("http://%s:%s@localhost:5984/" % (user, password))
 
-# for dbname in couchserver:
-#     print("Db name....vervproduct ")
-#     print(dbname)
 dbname = "vervproduct"
 if dbname in couchserver:
     db = couchserver[dbname]
 else:
     db = couchserver.create(dbname)
-# for id in db:
-#     print("The ids are ")
-#     print (id)
 
-# doc = db["101"]
-# print(doc)
-# Data to serve with our API
+#Sample data :
+doc1 = {
+    "_id": "101",
+    "pname": "Apple",
+    "cateory": "computer",
+    "quantity": 100
+}
 
+doc2 = {
+    "_id": "102",
+    "pname": "Apple2",
+    "cateory": "computer2",
+    "quantity": 200
+}
 
+doc3 = {
+    "_id": "103",
+    "pname": "Apple3",
+    "cateory": "computer3",
+    "quantity": 300
+}
+try:
+    db.save(doc1)
+except Exception as error:
+    print("error is ", error)
+    print("Mostly this error will happen when the document is already created.")
+
+try:
+    db.save(doc2)
+except Exception as error:
+    print("error is ", error)
+    print("Mostly this error will happen when the document is already created.")
+
+try:
+    db.save(doc3)
+except Exception as error:
+    print("error is ", error)
+    print("Mostly this error will happen when the document is already created.")
+    
 class CouchProvider(object):
     
     def read_product(_id):
