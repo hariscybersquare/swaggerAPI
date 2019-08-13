@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/v1.0"
+
+securityDefinitions:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-abcdef12345
+      x-apikeyInfoFunc: product.apikey_auth
+
+# Paths supported by the server application
+paths:
+  /product/{_id}:
+    get:
+      operationId: "product.read_product"
+      tags:
+        - "Products"
+      summary: "Read only one product details"
+      description: "Read only one product details"
+      parameters:
+        - name: _id
+          in: path
+          description: Enter the id of the product you want to list. 
+          type: string
+          required: True
+      security:
+        - APIKeyHeader: []
+      responses:
+        200:
+          description: "Successfully read the product information."
+          schema:
+            $ref: '#/definitions/Product'
+definitions:
+  Product:
+    type: object
+    properties:
+      _id:  { type: string }
+      prodname: { type: string }
+      catagory: { type: string }
+      quantity: 
+        type: number
